@@ -5,11 +5,14 @@ proc nibbleFromChar(c: char): int =
   of 'A'..'F': result = (ord(c) - ord('A') + 10)
   else: discard 255
 
+proc decode*[T: char|int8|uint8](str: string; result: var openArray[T]) =
+  assert(result.len == str.len div 2)
+  for i in 0..<result.len:
+    result[i] = T((nibbleFromChar(str[2 * i]) shl 4) or nibbleFromChar(str[2 * i + 1]))
+
 proc decode*(str: string): string =
-  let length = len(str) div 2
-  result = newString(length)
-  for i in result.low..result.high:
-    result[i] = chr((nibbleFromChar(str[2 * i]) shl 4) or nibbleFromChar(str[2 * i + 1]))
+  result = newString(len(str) div 2)
+  decode(str, result)
 
 proc nibbleToChar(nibble: int): char =
   const byteMap = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
