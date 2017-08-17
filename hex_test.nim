@@ -1,8 +1,5 @@
 import unittest, hex
 
-OutputLevel = PRINT_ALL
-
-
 test "Test hex string encoding and decoding":
   check hex.encode("The sun so bright it leaves no shadows") == "5468652073756e20736f20627269676874206974206c6561766573206e6f20736861646f7773"
   check "wherever you go, there you are" == hex.decode("776865726576657220796f7520676f2c20746865726520796f7520617265")
