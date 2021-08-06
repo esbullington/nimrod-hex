@@ -16,12 +16,10 @@ proc decode*(str: string): string =
 
 proc nibbleToChar(nibble: int): char =
   const byteMap = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
-  const byteMapLen = len(byteMap)
-  try:
-    if nibble < byteMapLen:
-      return byteMap[nibble];
-  except EInvalidValue:
-    echo "Hex string character out of range for valid hex char"
+  if nibble <= byteMap.high and nibble >= byteMap.low:
+    return byteMap[nibble];
+  else:
+    raise newException(ValueError, "Hex string character out of range for valid hex char: " & $nibble)
 
 proc encode*(str: string): string =
   var length = (len(str))
